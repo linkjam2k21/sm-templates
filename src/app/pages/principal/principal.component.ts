@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-principal',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './principal.component.css'
 })
 export class PrincipalComponent {
+
+  constructor(private auth: AuthService) {
+
+  }
+
+  SignOut(){
+    this.auth.SignOut();
+  }
 
 }

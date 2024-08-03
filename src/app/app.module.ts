@@ -27,7 +27,7 @@ import { PlanningComponent } from './pages/planning/planning.component';
     RetroComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

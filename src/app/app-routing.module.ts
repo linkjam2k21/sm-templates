@@ -5,6 +5,7 @@ import { PrincipalComponent } from './pages/principal/principal.component';
 import { PlanningComponent } from './pages/planning/planning.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { RetroComponent } from './pages/retro/retro.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: 'main',
     component: PrincipalComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'planning', component: PlanningComponent },
       { path: 'review', component: ReviewComponent },

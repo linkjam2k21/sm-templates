@@ -16,25 +16,28 @@ export class AuthService {
   /* Sign in */
   SignIn() {
 
+    let correos = ['linkjam06@gmail.com', 'jmorenoa@lafise.com'];
+
     return new Promise<any>((resolve, reject) => {
 
-      var provider = new firebase.auth.GoogleAuthProvider();
+      let provider = new firebase.auth.GoogleAuthProvider();
       //provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
-        this.angularFireAuth.signInWithPopup(provider).then(function (result: { user: any; }) {
+      this.angularFireAuth.signInWithPopup(provider).then(function (result: { user: any; }) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // The signed-in user info.
-        var user = result.user;
+        localStorage.setItem('akdsjaoyiwer872482badhjduq2t', "1");
+        let user = result.user;
         resolve(user);
         // ...
       }).catch(function (error: { code: any; message: any; email: any; credential: any; }) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
+        // let errorCode = error.code;
+        // let errorMessage = error.message;
+        // // The email of the user's account used.
+        // let email = error.email;
+        // // The firebase.auth.AuthCredential type that was used.
+        // let credential = error.credential;
         reject(error);
         // ...
       });
@@ -44,42 +47,51 @@ export class AuthService {
 
   /* Sign out */
   SignOut() {
-    this.angularFireAuth
-      .signOut();
+    localStorage.removeItem("akdsjaoyiwer872482badhjduq2t");
+    this.angularFireAuth.signOut().then((res) => {
+      this.myRoute.navigate(['/login']);
+    });
+  }
+
+  isAuthenticated() {
+    let isAuth = localStorage.getItem('akdsjaoyiwer872482badhjduq2t') != null && localStorage.getItem('akdsjaoyiwer872482badhjduq2t') == "1";
+
+    console.log(isAuth);
+    return isAuth;
   }
 
   setUserData(token: any) {
     localStorage.setItem('UDATA', JSON.stringify(token));
   }
 
-//   getUserData() {
-//     let data = JSON.parse(localStorage.getItem('UDATA'));
-//     return data;
-//   }
+  //   getUserData() {
+  //     let data = JSON.parse(localStorage.getItem('UDATA'));
+  //     return data;
+  //   }
 
-//   sendToken(token: string) {
-//     localStorage.setItem('LoggedInUser', token);
-//   }
+  //   sendToken(token: string) {
+  //     localStorage.setItem('LoggedInUser', token);
+  //   }
 
-//   getToken() {
-//     return localStorage.getItem('LoggedInUser');
-//   }
+  //   getToken() {
+  //     return localStorage.getItem('LoggedInUser');
+  //   }
 
-//   removeToken() {
-//     return localStorage.removeItem('LoggedInUser');
-//   }
+  //   removeToken() {
+  //     return localStorage.removeItem('LoggedInUser');
+  //   }
 
-//   isLoggedIn() {
-//     if (this.getToken() == null) {
-//       return false;
-//     }
+  //   isLoggedIn() {
+  //     if (this.getToken() == null) {
+  //       return false;
+  //     }
 
-//     return this.getToken() !== null;
-//   }
+  //     return this.getToken() !== null;
+  //   }
 
-//   logout() {
-//     localStorage.removeItem('LoggedInUser');
-//     this.myRoute.navigate(['Login']);
-//   }
+  //   logout() {
+  //     localStorage.removeItem('LoggedInUser');
+  //     this.myRoute.navigate(['Login']);
+  //   }
 
 }
