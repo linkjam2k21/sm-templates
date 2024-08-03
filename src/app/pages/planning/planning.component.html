@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label for="formFile" class="form-label">Archivo Excel</label>
-                <input type="file" class="form-control" (change)="addfile($event)" placeholder="Upload file"
+                <input type="file" class="form-control" (change)="addFile($event)" placeholder="Upload file"
                     accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
             </div>
         </div>
@@ -39,10 +39,7 @@
                                     </h2>
                                 </td>
                                 <td width="150">
-
-                                    <img id="logoImg"
-                                        src="https://s3.invisionapp-cdn.com/storage.invisionapp.com/boards/files/196864008.png?x-amz-meta-iv=1&x-amz-meta-ck=49c8a2a733af0a3caf7d49fd86a3d711&AWSAccessKeyId=AKIAWCDCF6QSLTS7LRWT&Expires=1722470400&Signature=5ZPyXC7DlbfxfimIDtRindt0U8c%3D"
-                                        alt="logoLafise" width="150px">
+                                    <img id="logoImg" [src]="logoImage" alt="logoLafise" width="150px">
                                 </td>
                             </tr>
                         </table>
@@ -50,7 +47,7 @@
                     <!-- Introduccion Correo -->
                     <div id="body">
                         <p>
-                            Buenos días Equipo, les envío la esencia de lo que abordamos el día de hoy en el 
+                            Buenos días Equipo, les envío la esencia de lo que abordamos el día de hoy en el
                             Sprint
                             Planning
                             el cual
@@ -109,8 +106,8 @@
                                             <table>
                                                 <tr style="border: none !important">
                                                     <td style="width: 48px; height: 48px;">
-                                                        <img
-                                                            src="https://cdn-icons-png.flaticon.com/512/2098/2098276.png" alt="" style="width: 48px;" />
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/2098/2098276.png"
+                                                            alt="" style="width: 48px;" />
                                                     </td>
                                                     <td style="padding: 5px;">
                                                         <div class="title">Actividades Planificadas para el {{
@@ -125,7 +122,7 @@
 
 
                                         </div>
-                                        <div >
+                                        <div>
                                             <table id="actividades" class="mt-6 mb-12">
                                                 <thead>
                                                     <tr class="">
@@ -165,9 +162,10 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td style="text-align: right;"> <span [innerHTML]="item.Sprint"></span></td>
+                                                        <td style="text-align: right;"> <span
+                                                                [innerHTML]="item.Sprint"></span></td>
                                                         <td></td>
-                                                        
+
                                                     </tr>
                                                     }
                                                     }

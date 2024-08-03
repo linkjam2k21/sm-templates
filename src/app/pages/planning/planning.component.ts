@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
+import { ImageUtils } from '../../utils/image.util';
 
 @Component({
   selector: 'app-planning',
@@ -7,7 +8,8 @@ import * as XLSX from 'xlsx';
   styleUrl: './planning.component.css'
 })
 
-export class PlanningComponent {
+export class PlanningComponent implements OnInit {
+
 
   arrayBuffer: any;
   filelist: any;
@@ -21,25 +23,44 @@ export class PlanningComponent {
     actividades: []
   }
 
-  addfile(event: any) {
-    let file = event.target.files[0];
-    let fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(file!);
-    fileReader.onload = (e) => {
-      this.arrayBuffer = fileReader.result;
-      var data = new Uint8Array(this.arrayBuffer);
-      var arr = new Array();
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, { type: "binary" });
-      var first_sheet_name = workbook.SheetNames[0];
+  logoImage: string = "";
 
+  ngOnInit(): void {
+    ImageUtils.toDataURL("./assets/images/logowhite.png", (dataUrl: any) => {
+      this.logoImage = dataUrl;
+    });
+  }
+
+  addFile(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      console.error("No file selected.");
+      return;
+    }
+
+    const file = input.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onload = (e: ProgressEvent<FileReader>) => {
+      const arrayBuffer = e.target?.result;
+      if (!arrayBuffer) {
+        console.error("File could not be read.");
+        return;
+      }
+
+      const data = new Uint8Array(arrayBuffer as ArrayBuffer);
+      const bstr = String.fromCharCode(...data);
+      const workbook = XLSX.read(bstr, { type: "binary" });
 
       this.procesarGeneralidades(workbook);
       this.procesarActividades(workbook);
+    };
 
+    fileReader.onerror = () => {
+      console.error("Error reading file.");
+    };
 
-    }
+    fileReader.readAsArrayBuffer(file);
   }
 
   getProgressDiv(progress: any) {
