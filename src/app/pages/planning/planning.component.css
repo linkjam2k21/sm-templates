@@ -1,0 +1,169 @@
+.body {
+    font-optical-sizing: auto;
+    font-size: 10pt;
+    padding: 0;
+    margin: 0;
+}
+
+p{
+    padding: 12px 0px;
+}
+
+#objetivos {
+    padding: 10px;
+}
+.title {
+    font-size: 12pt !important;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 10pt;
+    font-weight: lighter;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    border-bottom: 1px solid #cdcdcd;
+}
+
+td {
+    padding: 2px;
+    vertical-align: top;
+}
+
+td img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+.objetive {
+    padding: 4px;
+    font-weight: 700;
+}
+
+.theme-exp-digital .objetive {
+    color: rgba(0, 167, 233, 1);
+    background-color: #f7fbff;
+    padding: 4px;
+    font-weight: 700;
+}
+
+.theme-poket .objetive {
+    color: #1137C0;
+    background-color: #d3dcff;
+    padding: 4px;
+    font-weight: 700;
+}
+
+#header {
+    padding: 40px 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.theme-exp-digital #header {
+    background: rgb(10, 44, 143);
+    background: linear-gradient(48deg, rgba(0, 191, 153, 1) 0%, rgba(0, 167, 233, 1) 49%, rgba(10, 44, 143, 1) 100%);
+}
+
+.theme-poket #header {
+    background: rgb(17, 55, 192);
+    background: linear-gradient(97deg, rgba(17, 55, 192, 1) 0%, rgba(111, 82, 255, 1) 100%);
+}
+
+.theme-exp-digital #header h2 {
+    text-shadow: 1px 1px #333;
+}
+
+#body {
+    padding: 0 20px;
+}
+
+
+#objetivos {
+    background: #f6f6f6;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    line-height: 32px;
+}
+
+thead {
+    color: #555;
+    background-color: #f6f6f6;
+
+
+}
+
+th {
+    padding: 8px;
+}
+
+#footer {
+    height: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.theme-exp-digital #footer {
+    background-color: #076970;
+}
+
+.theme-poket #footer {
+    background-color: #1137C0;
+}
+
+.theme-exp-digital {
+    font-family: "Open Sans", sans-serif;
+    
+   
+}
+
+.theme-poket {
+   font-family: "Nunito Sans", sans-serif;
+   /* font-family: "Playwrite US Modern", cursive; */
+}
+
+.container{
+    border-radius: 10px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.m-card {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+
+.m-card-header {
+    padding: .5rem 1rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    margin: 5px;
+    /* border: 1px solid #444; */
+}
+
+/* 
+
+#1137C0
+#6f52ff
+#54f4b1
+
+
+*/
