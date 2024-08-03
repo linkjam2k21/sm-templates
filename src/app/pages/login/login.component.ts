@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
         // this.loadingVisible = false;
         // this.ValidacionMensaje = JSON.parse(fail);
         // notify(this.ValidacionMensaje, 'error', 3000);
+        alert('No tiene acceso a usar este portal');
       });
     } else {
       console.log('Formulario Inválido');

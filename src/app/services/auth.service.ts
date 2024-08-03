@@ -16,7 +16,7 @@ export class AuthService {
   /* Sign in */
   SignIn() {
 
-    let correos = ['linkjam06@gmail.com', 'jmorenoa@lafise.com'];
+   
 
     return new Promise<any>((resolve, reject) => {
 
@@ -26,9 +26,16 @@ export class AuthService {
       this.angularFireAuth.signInWithPopup(provider).then(function (result: { user: any; }) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // The signed-in user info.
-        localStorage.setItem('akdsjaoyiwer872482badhjduq2t', "1");
+        let correos = ['linkjam06@gmail.com', 'jmorenoa@lafise.com'];
         let user = result.user;
-        resolve(user);
+       
+        if(correos.includes(user.email)){
+          localStorage.setItem('akdsjaoyiwer872482badhjduq2t', "1");
+          resolve(user);
+        }else{
+          reject(user);
+        }
+        
         // ...
       }).catch(function (error: { code: any; message: any; email: any; credential: any; }) {
         // Handle Errors here.
