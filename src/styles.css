@@ -48,6 +48,14 @@ td img {
     font-weight: 700;
 }
 
+.theme-default .objetive {
+    color: #008866;
+    background-color: #f7fbff;
+    padding: 4px;
+    font-weight: 700;
+}
+
+
 .theme-exp-digital .objetive {
     color: rgba(0, 167, 233, 1);
     background-color: #f7fbff;
@@ -67,6 +75,11 @@ td img {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+
+.theme-default #header {
+    background: #008866;
+}
+
 
 .theme-exp-digital #header {
     background: rgb(10, 44, 143);
@@ -111,6 +124,11 @@ th {
     border-bottom-right-radius: 10px;
 }
 
+.theme-default #footer {
+    background: #008866;
+}
+
+
 
 .theme-exp-digital #footer {
     background-color: #076970;
@@ -119,6 +137,13 @@ th {
 .theme-poket #footer {
     background-color: #1137C0;
 }
+
+
+
+.theme-default {
+    font-family: "Open Sans", sans-serif;
+}
+
 
 .theme-exp-digital {
     font-family: "Open Sans", sans-serif;

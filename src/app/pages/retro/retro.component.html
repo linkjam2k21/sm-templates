@@ -1,1 +1,217 @@
-<p>Estamos trabajando en los componentes del Retrospective</p>
+<div style="background-color: #eaeaea; padding: 20px; border-bottom: 1px solid #cdcdcd;">
+    <div class="row">
+        <div class="col-md-12" style="text-align: center; padding-bottom: 15px;">
+            <h5><b> 💬 Sprint Retro  </b></h5>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label  class="form-label">Tema</label>
+                <select class="form-select"  [(ngModel)]="mainClass">
+                    @for (item of themes; track item){
+                        <option [value]="item">{{item}}</option>
+                    }
+                </select>
+            </div>
+           
+        </div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Archivo Excel</label>
+                <input type="file" class="form-control" (change)="addFile($event)" placeholder="Upload file"
+                    accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            </div>
+           
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+
+<div class="body  {{ mainClass }}" >
+    <!-- Contenedor -->
+    <div style="width: 100%; color:#444444;">
+        <div style="text-align: center;">
+            <br>
+            &nbsp;
+            <br>
+            &nbsp;
+            <br>
+        </div>
+
+        <table class="container" style="width: 950px;">
+            <tr style="border: none !important;">
+                <td>
+                    <!-- Logo y Titulo -->
+                    <div id="header">
+                        <table style="width: 950px;">
+                            <tr style="border: none !important">
+                                <td>
+                                    <h2 id="equipo" class="fs-2 mt-2" style="color:#fff;">{{ planning.team
+                                        }}</h2>
+                                    <h2 class="fs-6 mt-2 mb-2" style="color: #fff;">Retrospective: {{
+                                        planning.sprint }}
+                                    </h2>
+                                </td>
+                                <td width="150">
+                                    <img id="logoImg" [src]="logoImage" alt="logoLafise" width="150px">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Introduccion Correo -->
+                    <div id="body">
+                        <p>
+                            Buenos días Equipo, les envío la esencia de lo que abordamos el día de hoy en la
+                            Retrospectiva del {{ planning.sprint }} 
+                            el cual
+                            está comprendido entre el
+                            <span id="inicio" class="fw-semibold">{{ planning.inicio }}</span> al <span id="fin"
+                                class="fw-semibold">{{ planning.fin }}.</span>
+                        </p>
+
+                        <!-- Objetivos -->
+                        <table>
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important; ">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/10550/10550877.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding-left: 5px;">
+                                                        <div class="title">Situaciones Planteadas
+                                                        </div>
+                                                        <div class="subtitle">Elementos planteados para realizar mejoras.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            @for (item of planning.objetivos; track item){
+                                            <table>
+                                                <tr style="border: none !important">
+                                                    <td width="32"><img
+                                                            src="https://cdn-icons-png.flaticon.com/512/14025/14025509.png"
+                                                            width="32" /></td>
+                                                    <td>
+                                                        <div [innerHTML]="item"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <!-- Actividades -->
+                        <table>
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card" style="margin-top: 20px;">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/2098/2098276.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding: 5px;">
+                                                        <div class="title">Actividades Planificadas para Mejorar
+                                                        </div>
+                                                        <div class="subtitle">Actividades relacionadas a las situaciones planteadas a mejorar.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+                                        <div>
+                                            <table id="actividades" class="mt-6 mb-12">
+                                                <thead>
+                                                    <tr class="">
+                                                        <th width="20px"></th>
+                                                        <th scope="col">Actividad</th>
+                                                        <th scope="col" width="38px"></th>
+                                                        <th scope="col" width="200px">Responsable</th>
+                                                        <!-- <th scope="col" width="100px">Puntos de Historia</th> -->
+                                                        <th scope="col" width="100px">Fecha</th>
+                                                        <th width="20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of planning.actividades; track item.tipo) {
+                                                    @if (item.Tipo == "Situacion") {
+                                                    <tr>
+                                                        <td class='objetive'></td>
+                                                        <td class='objetive' colspan='5' [innerHTML]="item.Actividad">
+                                                        </td>
+                                                        <td class='objetive'></td>
+                                                    </tr>
+                                                    }
+                                                    @if (item.Tipo == "Plan") {
+                                                    <tr>
+                                                        <td></td>
+                                                        <td> <span [innerHTML]="item.Actividad"></span></td>
+                                                        <td style='vertical-align: top; width: 36px'> <img
+                                                                class="avatar" [src]="item.Image" alt="" /></td>
+                                                        <td> <span [innerHTML]="item.Responsable"></span></td>
+                                                        
+                                                        <td style="text-align: right;"> <span
+                                                                [innerHTML]="item.Fecha"></span></td>
+                                                        <td></td>
+
+                                                    </tr>
+                                                    }
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+
+
+                        <p>Cualquier consulta o comentario estamos a la orden.</p>
+                        <p class="mt-4">Muchas gracias.</p>
+                        <p class="mt-4 mb-4">Saludos.</p>
+
+                    </div>
+
+                    <div id="footer"></div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center;">
+            <br>
+            &nbsp;
+            <br>
+            &nbsp;
+            <br>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="../js/utils.js"></script>
+    <script src="sprint.planning.js"></script>
+</div>

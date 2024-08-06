@@ -14,6 +14,8 @@ export class PlanningComponent implements OnInit {
   arrayBuffer: any;
   filelist: any;
 
+  mainClass = 'theme-default';
+  
   planning: any = {
     team: "Experiencia Digital",
     sprint: "Sprint # 5",
@@ -22,6 +24,9 @@ export class PlanningComponent implements OnInit {
     objetivos: [],
     actividades: []
   }
+
+
+  themes = ['theme-default','theme-exp-digital','theme-poket'];
 
   logoImage: string = "";
 
