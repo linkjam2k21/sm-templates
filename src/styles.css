@@ -193,3 +193,11 @@ th {
 
 
 */
+
+.theme-activos-comercial .objetive {
+    color: rgba(0, 167, 233, 1);
+    background-color: #f7fbff;
+    padding: 4px;
+    font-weight: 700;
+}
+

@@ -13,6 +13,9 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthService } from './services/auth.service';
 import { ReviewComponent } from './pages/review/review.component';
+import { ReviewComponent as ActivosComercialReviewComponent } from './pages/review/activos-comercial/review.component';
+import { ReviewComponent as ActivosJuridicoCoreReviewComponent } from './pages/review/activos-juridico-core/review.component';
+import { ReviewComponent as GeneralReviewComponent } from './pages/review/general/review.component';
 import { RetroComponent } from './pages/retro/retro.component';
 import { PlanningComponent } from './pages/planning/planning.component';
 
@@ -24,7 +27,10 @@ import { PlanningComponent } from './pages/planning/planning.component';
     LoginComponent,
     PlanningComponent,
     ReviewComponent,
-    RetroComponent
+    RetroComponent,
+    ActivosComercialReviewComponent,
+    GeneralReviewComponent,
+    ActivosJuridicoCoreReviewComponent
   ],
   imports: [
     BrowserModule,

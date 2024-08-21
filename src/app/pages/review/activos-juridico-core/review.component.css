@@ -1,0 +1,18 @@
+
+.theme-activos-juridico-core #header {
+    background: rgb(10, 44, 143);
+    background: linear-gradient(115deg, rgba(12, 22, 38, 1) 0%, rgba(51, 60, 76, 1) 100%);
+}
+
+.theme-activos-juridico-core #header h2 {
+    text-shadow: 1px 1px #333;
+}
+
+
+.theme-activos-juridico-core #footer {
+    background-color: #076970;
+}
+
+.theme-activos-juridico-core {
+    font-family: "Open Sans", sans-serif;
+}
