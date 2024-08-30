@@ -1,0 +1,18 @@
+
+.theme-tarjetas-retail #header {
+    background: rgb(10, 44, 143);
+    background: linear-gradient(180deg, rgba(2, 128, 118, 1) 0%, rgba(1, 87, 121, 1) 49%, rgba(0, 37, 98, 1) 100%);
+}
+
+.theme-tarjetas-retail #header h2 {
+    text-shadow: 1px 1px #333;
+}
+
+
+.theme-tarjetas-retail #footer {
+    background-color: #076970;
+}
+
+.theme-tarjetas-retail {
+    font-family: "Open Sans", sans-serif;
+}

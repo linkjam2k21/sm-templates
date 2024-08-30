@@ -1,0 +1,291 @@
+<div class="body  {{ mainClass }}">
+    <!-- Contenedor -->
+    <div style="width: 100%; color:#444444;">
+        <div style="text-align: center;">
+            <br>
+            &nbsp;
+            <br>
+            &nbsp;
+            <br>
+        </div>
+
+        <table class="container" style="width: 950px;">
+            <tr style="border: none !important;">
+                <td>
+                    <!-- Logo y Titulo -->
+                    <div id="header">
+                        <table style="width: 950px;">
+                            <tr style="border: none !important">
+                                <td>
+                                    <h2 id="equipo" class="fs-2 mt-2" style="color:#fff;">{{ planning.team
+                                        }}</h2>
+                                    <h2 class="fs-6 mt-2 mb-2" style="color: #fff;">Review: {{
+                                        planning.sprint }}
+                                    </h2>
+                                </td>
+                                <td width="150">
+                                    <img id="logoImg" [src]="logoImage" alt="logoLafise" width="150px">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Introduccion Correo -->
+                    <div id="body">
+                        <p>
+                            Buenos días Equipo, les envío la esencia de lo que abordamos el día de hoy en el
+                            review del {{ planning.sprint }}
+                        </p>
+                        @if(mainClass != 'theme-default'){
+                        <!-- Avance -->
+                        <table>
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important; ">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/128/1055/1055646.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding-left: 5px;">
+                                                        <div class="title">Avances Kpis
+                                                        </div>
+                                                        <div class="subtitle">% Avances Kpis y Proyectos.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <table style="width: 100%; text-align: center;">
+                                                <tr style="border: none !important;">
+                                                    <td width="232">
+                                                        <img [src]="graficos.kpi1.imagen" alt=""
+                                                            style="width: 309px; height: 200px;" />
+                                                        <div> <b> {{graficos.kpi1.nombre}}</b></div>
+                                                    </td>
+                                                    <td width="10"></td>
+                                                    <td width="232">
+                                                        <img [src]="graficos.kpi2.imagen" alt=""
+                                                            style="width: 309px; height: 200px;" />
+                                                        <div> <b>{{graficos.kpi2.nombre}}</b> </div>
+                                                    </td>
+                                                    <td width="10"></td>
+                                                    <td width="232">
+                                                        <img [src]="graficos.kpi3.imagen" alt=""
+                                                            style="width: 309px; height: 200px;" />
+                                                        <div><b>{{graficos.kpi3.nombre}}</b></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <hr>
+                                            <img [src]="graficos.modulos" style="width: 950px; height: 300px;" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        }
+
+
+                        <!-- Necesidades de los Proyectos -->
+                        @if(planning.necesidadProyectos.length > 0) {
+                        <table style="margin-top: 20px;">
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important; ">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/6333/6333137.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding-left: 5px;">
+                                                        <div class="title">Necesidades de los Proyectos {{
+                                                            planning.sprint }}
+                                                        </div>
+                                                        <div class="subtitle">Apoyo requerido para avanzar.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <table id="actividades" class="mt-6 mb-12">
+                                                <thead>
+                                                    <tr class="">
+                                                        <td></td>
+                                                        <th scope="col" width="24px"></th>
+                                                        <th scope="col" width="180px">Proyecto</th>
+                                                        <th scope="col">Necesidad</th>
+                                                        <th scope="col" width="180px"></th>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of planning.necesidadProyectos; track item) {
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td style='vertical-align: top; width: 36px'>
+                                                            <img 
+                                                                src='{{ "https://flagcdn.com/24x18/" + (item.Pais??"NI").toLowerCase() + ".png" }}'
+                                                                alt="" />
+                                                        </td>
+                                                        <td> <span [innerHTML]="item.Proyecto"></span></td>
+                                                        <td> <span [innerHTML]="item.Necesidad"></span></td>
+                                                        <td> <span [innerHTML]="item.Quien"></span></td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        }
+                        <!-- Comentarios -->
+                        <table style="margin-top: 20px;">
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important; ">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/128/2518/2518227.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding-left: 5px;">
+                                                        <div class="title">Comentarios del Review {{
+                                                            planning.sprint }}
+                                                        </div>
+                                                        <div class="subtitle">Comentarios realizados en el evento.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <table id="actividades" class="mt-6 mb-12">
+                                                <thead>
+                                                    <tr class="">
+                                                        <td></td>
+                                                        <th scope="col" width="24px"></th>
+                                                        <th scope="col" width="180px">Desarrollador</th>
+                                                        <th scope="col">Comentario</th>
+                                                        <th scope="col" width="180px"></th>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of planning.comentarios; track item) {
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td style='vertical-align: top; width: 36px'> <img
+                                                                class="avatar" [src]="item.Image" alt="" /></td>
+                                                        <td> <span [innerHTML]="item.Desarrollador"></span></td>
+                                                        <td><span [innerHTML]="item.Comentarios"></span></td>
+                                                        <td> <span [innerHTML]="item.Quien"></span></td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        @if(mainClass != 'theme-default'){
+                        <!-- Enlaces  -->
+                        <table style="margin-top: 20px;">
+                            <tr style="border: none !important">
+                                <td>
+                                    <div class="m-card">
+                                        <div class="m-card-header">
+                                            <table>
+                                                <tr style="border: none !important">
+                                                    <td style="width: 48px; height: 48px;">
+                                                        <img src="https://cdn-icons-png.flaticon.com/128/3059/3059202.png"
+                                                            alt="" style="width: 48px;" />
+                                                    </td>
+                                                    <td style="padding: 5px;">
+                                                        <div class="title">Enlaces de relevancia {{
+                                                            planning.sprint
+                                                            }}
+                                                        </div>
+                                                        <div class="subtitle">Presentación.</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <table style="text-align: center;">
+                                                <tr style="border: none !important;">
+                                                    <td>
+                                                        <a [attr.href]="enlaces.review.enlace" target="_blank">
+                                                            <img [src]="enlaces.review.imagen" height="100"
+                                                                style="height: 150px" />
+                                                            <div>Presentación Sprint Review</div>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a [attr.href]="enlaces.funcionalidad.enlace" target="_blank">
+                                                            <img [src]="enlaces.funcionalidad.imagen"
+                                                                id="avanceFuncionalidad" height="100"
+                                                                style="height: 150px" />
+                                                            <div>Encuesta Sprint Review</div>
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        }
+                        <p>Cualquier consulta o comentario estamos a la orden.</p>
+                        <p class="mt-4">Muchas gracias.</p>
+                        <p class="mt-4 mb-4">Saludos.</p>
+
+
+
+                    </div>
+
+                    <div id="footer"></div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center;">
+            <br>
+            &nbsp;
+            <br>
+            &nbsp;
+            <br>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="../js/utils.js"></script>
+    <script src="sprint.planning.js"></script>
+</div>

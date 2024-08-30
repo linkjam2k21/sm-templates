@@ -49,7 +49,7 @@ export class ReviewComponent {
   };
 
 
-  themes = ['theme-default', 'theme-exp-digital', 'theme-poket', 'theme-activos-comercial', 'theme-activos-juridico-core'];
+  themes = ['theme-default', 'theme-exp-digital', 'theme-poket', 'theme-activos-comercial', 'theme-activos-juridico-core', 'theme-tarjetas-retail'];
 
   logoImage: string = "";
 
@@ -104,6 +104,11 @@ export class ReviewComponent {
     if (this.mainClass == 'theme-activos-juridico-core') {
       return "#1C3258";
     }
+
+    if (this.mainClass == 'theme-tarjetas-retail') {
+      return "#008866";
+    }
+
 
     return "#000000";
   }

@@ -15,6 +15,7 @@ import { AuthService } from './services/auth.service';
 import { ReviewComponent } from './pages/review/review.component';
 import { ReviewComponent as ActivosComercialReviewComponent } from './pages/review/activos-comercial/review.component';
 import { ReviewComponent as ActivosJuridicoCoreReviewComponent } from './pages/review/activos-juridico-core/review.component';
+import { ReviewComponent as TarjetasRetailReviewComponent } from './pages/review/tarjetas-retail/review.component';
 import { ReviewComponent as GeneralReviewComponent } from './pages/review/general/review.component';
 import { RetroComponent } from './pages/retro/retro.component';
 import { PlanningComponent } from './pages/planning/planning.component';
@@ -30,7 +31,8 @@ import { PlanningComponent } from './pages/planning/planning.component';
     RetroComponent,
     ActivosComercialReviewComponent,
     GeneralReviewComponent,
-    ActivosJuridicoCoreReviewComponent
+    ActivosJuridicoCoreReviewComponent,
+    TarjetasRetailReviewComponent
   ],
   imports: [
     BrowserModule,
