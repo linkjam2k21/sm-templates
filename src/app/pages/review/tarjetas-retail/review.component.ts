@@ -150,31 +150,31 @@ export class ReviewComponent {
 
 
     const worksheetKpi = workbook.Sheets["Kpi1"];
-    const goal = worksheetKpi['D2'].v;
+    const goal = worksheetKpi['E2'].v;
     const dataKpi = XLSX.utils.sheet_to_json(worksheetKpi, { header: 0 });
 
     this.graficos.kpi1 = {
       imagen: this.graficoBarra(dataKpi, goal),
-      nombre: worksheetKpi['C2'].v
+      nombre: worksheetKpi['D2'].v
     };
 
     const worksheetKpi2 = workbook.Sheets["Kpi2"];
-    const goalKpi2 = worksheetKpi2['D2'].v;
+    const goalKpi2 = worksheetKpi2['E2'].v;
     const dataKpi2 = XLSX.utils.sheet_to_json(worksheetKpi2, { header: 0 });
 
     this.graficos.kpi2 = {
       imagen: this.graficoBarra(dataKpi2, goalKpi2),
-      nombre: worksheetKpi2['C2'].v
+      nombre: worksheetKpi2['D2'].v
     };
 
 
     const worksheetKpi3 = workbook.Sheets["Kpi3"];
-    const goalKpi3 = worksheetKpi3['D2'].v;
+    const goalKpi3 = worksheetKpi3['E2'].v;
     const dataKpi3 = XLSX.utils.sheet_to_json(worksheetKpi3, { header: 0 });
 
     this.graficos.kpi3 = {
       imagen: this.graficoBarra(dataKpi3, goalKpi3),
-      nombre: worksheetKpi3['C2'].v
+      nombre: worksheetKpi3['D2'].v
     };
 
 
@@ -187,49 +187,67 @@ export class ReviewComponent {
     let labels: any[] = [];
     let data: any[] = [];
 
-    kpi.forEach((el: { Mes: any; Valor: any; }) => {
+    let dataLine: any[] = [];
+
+    kpi.forEach((el: { Mes: any; Valor: any; Avance: any }) => {
       labels.push(el.Mes);
       data.push(el.Valor);
+      dataLine.push(
+        { x: el.Mes, y: 0, label: el.Avance + "%" }
+      );
     });
 
 
 
     const chartStr = `{
-                        "type": "horizontalBar",
+                        "type": "bar",
                         "data": {
                           "labels": ${JSON.stringify(labels)},
                           "datasets": [
                             {
-                              "label": "Dataset 2",
+                              type: 'line',
+                              data:  ${JSON.stringify(dataLine)},
+                              fill: false,
+                              borderWidth: 0,
+                              pointRadius: 0,
+                              borderColor: 'white',  
+                            },
+                            {
+                              "type": "bar",
                               "backgroundColor": getGradientFillHelper('vertical', [
-                              'rgba(0, 37, 98, 1)',  
-                              'rgba(0, 37, 98, 1)',
-                                
+                                'rgba(0, 37, 98, 1)',  
+                                'rgba(0, 37, 98, 1)',
                               ]),
                               "borderColor": 'rgba(0, 37, 98, 1)',  
                               "borderWidth": 1,
                               "data": ${JSON.stringify(data)},
-                            }
+                            },
                           ]
                         },
                         "options": {
+                          layout: {
+                              padding: {
+                                  top: 40,
+                              }
+                          },
                           "responsive": true,
                           "legend": {
                             display: false,
                           },
                           "plugins": {
-                            "roundedBars": true,
+                            roundedBars: true,
                             datalabels: {
                               anchor: 'end',
-                              align: 'right',
-                              color: 'rgba(0, 37, 98, 1)',
+                              align: 'top',
+                              color: function(ctx) {
+                                  return ctx.dataset.borderColor
+                              },
                               font: {
                                 weight: 'normal',
                               },
                             },
                           },
                         },
-                        
                       }`;
 
     let chartImage = "https://quickchart.io/chart?w=309&h=200&c=" + encodeURIComponent(chartStr);
@@ -241,7 +259,7 @@ export class ReviewComponent {
   graficoGantt(data: any[]) {
     // backgroundColor: ['rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)'],
 
-    //let color = this.baseColor;
+    // let color = this.baseColor;
 
     const today = new Date();
     const formattedDate = this.datePipe.transform(today, 'yyyy-MM-dd');
