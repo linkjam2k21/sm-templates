@@ -126,7 +126,7 @@ export class ReviewComponent {
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
 
     data.forEach((value: any) => {
-      if (value.Comentarios != undefined)
+      if (value.Necesidad != undefined)
         this.planning.comentarios.push(value);
     });
   }
@@ -167,14 +167,13 @@ export class ReviewComponent {
       nombre: worksheetKpi2['D2'].v
     };
 
-
     const worksheetKpi3 = workbook.Sheets["Kpi3"];
-    const goalKpi3 = worksheetKpi3['E2'].v;
+    const goalKpi3 = worksheetKpi3['D2'].v;
     const dataKpi3 = XLSX.utils.sheet_to_json(worksheetKpi3, { header: 0 });
 
     this.graficos.kpi3 = {
       imagen: this.graficoBarra(dataKpi3, goalKpi3),
-      nombre: worksheetKpi3['D2'].v
+      nombre: worksheetKpi3['C2'].v
     };
 
 
@@ -192,9 +191,12 @@ export class ReviewComponent {
     kpi.forEach((el: { Mes: any; Valor: any; Avance: any }) => {
       labels.push(el.Mes);
       data.push(el.Valor);
-      dataLine.push(
-        { x: el.Mes, y: 0, label: el.Avance + "%" }
-      );
+
+      if (el.Avance) {
+        dataLine.push(
+          { x: el.Mes, y: 0, label: (el.Avance ?? 0) + "%" }
+        );
+      }
     });
 
 
