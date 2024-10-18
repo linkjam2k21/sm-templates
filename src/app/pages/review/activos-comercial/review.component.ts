@@ -112,6 +112,7 @@ export class ReviewComponent {
       if (value.Comentarios != undefined)
         this.planning.comentarios.push(value);
     });
+
   }
 
   procesarEnlaces(workbook: XLSX.WorkBook) {

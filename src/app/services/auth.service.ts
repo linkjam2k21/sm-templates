@@ -26,7 +26,7 @@ export class AuthService {
       this.angularFireAuth.signInWithPopup(provider).then(function (result: { user: any; }) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // The signed-in user info.
-        let correos = ['linkjam06@gmail.com', 'jmorenoa@lafise.com', 'grocha@lafise.com', 'djmayorga@lafise.com', 'jksomarriba@lafise.com'];
+        let correos = ['linkjam06@gmail.com', 'jmorenoa@lafise.com', 'grocha@lafise.com', 'djmayorga@lafise.com', 'jksomarriba@lafise.com', 'nemoraga@lafise.com'];
         let user = result.user;
        
         if(correos.includes(user.email)){
