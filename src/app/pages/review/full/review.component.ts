@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import { ImageUtils } from '../../../utils/image.util';
 
 @Component({
-  selector: 'app-review-general',
+  selector: 'app-review-full',
   templateUrl: './review.component.html',
   styleUrl: './review.component.css'
 })
@@ -230,15 +230,13 @@ export class ReviewComponent {
                 },
               }
       }
-    }
-    
-      `;
+    }`;
 
     return "https://quickchart.io/chart?w=80&h=80&c=" + encodeURIComponent(chartStr);
 
   }
 
-
+  
   graficoGantt(data: any[]) {
     // backgroundColor: ['rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)'],
 
