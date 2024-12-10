@@ -11,28 +11,31 @@ export class ReviewComponent {
   @Input() fileWorkbook: XLSX.WorkBook | null = null;
   @Input() mainClass = 'theme-default';
   @Input() baseColor = '#000000';
-  
+
   planning: any = {
     team: "Poket",
     sprint: "Sprint # 18",
     inicio: "01/01/2025",
     fin: "15/01/2025",
     enlaces: [],
-    comentarios: []
+    comentarios: [],
+    riesgos: [],
+    alcance: [],
+    mvp: {
+      nombre: '',
+      imagen: '',
+      logros: []
+    }
   }
 
   graficos = {
+    avance: 0,
     general: "",
-    ux: {
-      imagen: "", value: 0
-    },
-    be: {
-      imagen: "", value: 0
-    },
-    fe: {
-      imagen: "", value: 0
-    },
-    modulos: ""
+    avancesEspecialidad: "",
+    velocidadEquipo: "",
+    velocidadMiembros: "",
+    modulos: "",
+    enlaces: ""
   }
 
   enlaces = {
@@ -60,7 +63,7 @@ export class ReviewComponent {
       this.enlaces.qrcode.imagen = dataUrl;
     });
 
-    
+
   }
 
   ngOnChanges(): void {
@@ -106,31 +109,65 @@ export class ReviewComponent {
       if (value.Comentarios != undefined)
         this.planning.comentarios.push(value);
     });
+
+    // Riesgos
+    const worksheetRi = workbook.Sheets["Riesgos"];
+    const dataRiesgos = XLSX.utils.sheet_to_json(worksheetRi, { header: 0 });
+
+    dataRiesgos.forEach((value: any) => {
+      if (value.Riesgo != undefined)
+        this.planning.riesgos.push(value.Riesgo);
+    });
+
+    // Alcance / Objetivos
+    const worksheetObj = workbook.Sheets["Objetivos"];
+    const dataAlcance = XLSX.utils.sheet_to_json(worksheetObj, { header: 0 });
+
+    dataAlcance.forEach((value: any) => {
+      if (value.Objetivo != undefined)
+        this.planning.alcance.push(value);
+    });
+
+
+    //MVP
+    const worksheetMVP = workbook.Sheets["MVP"];
+    const dataMVP = XLSX.utils.sheet_to_json(worksheetMVP, { header: 0 });
+
+    this.planning.mvp.nombre = worksheetMVP['A2'].v;
+    this.planning.mvp.imagen = worksheetMVP['B2'].v;
+
+    dataMVP.forEach((value: any) => {
+      if (value.Logros != undefined)
+        this.planning.mvp.logros.push(value);
+    });
+
+
   }
 
   procesarEnlaces(workbook: XLSX.WorkBook) {
     const worksheet = workbook.Sheets["Enlaces"];
+    const dataEnlaces = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
 
-    this.enlaces.review.enlace = worksheet['B1'].v;
-    this.enlaces.funcionalidad.enlace = worksheet['B2'].v;
-    this.enlaces.qrcode.enlace = worksheet['B3'] == undefined ? "" : worksheet['B3'].v;
+    dataEnlaces.forEach((value: any) => {
+      if (value.Titulo != undefined)
+        this.planning.enlaces.push(value);
+    });
+
 
   }
 
   procesarGraficos(workbook: XLSX.WorkBook) {
     const worksheet = workbook.Sheets["Modulos"];
     const worksheetGen = workbook.Sheets["Generalidades"];
-    const worksheetAct = workbook.Sheets["Actividades"];
+    const worksheetAva = workbook.Sheets["Avance"];
+    const worksheetVelEq = workbook.Sheets["VelocidadTeam"];
+    const worksheetVelMem = workbook.Sheets["VelocidadMiembro"];
+
 
     this.graficos.general = this.graficoGeneral(worksheetGen['B5'].v);
-    this.graficos.ux.value = worksheetAct['C3'].v;
-    this.graficos.ux.imagen = this.graficoCircularTeam(worksheetAct['C3'].v);
-
-    this.graficos.be.value = worksheetAct['C4'].v;
-    this.graficos.be.imagen = this.graficoCircularTeam(worksheetAct['C4'].v);
-
-    this.graficos.fe.value = worksheetAct['C5'].v;
-    this.graficos.fe.imagen = this.graficoCircularTeam(worksheetAct['C5'].v);
+    this.graficos.avancesEspecialidad = this.graficoAvanceEpecialidad(worksheetAva);
+    this.graficos.velocidadEquipo = this.graficoVelocidadEquipo(worksheetVelEq);
+    this.graficos.velocidadMiembros = this.graficoVelocidadMiembros(worksheetVelMem);
 
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 0 });
 
@@ -140,103 +177,113 @@ export class ReviewComponent {
 
   graficoGeneral(avanceGeneral: any) {
 
+    this.graficos.avance= avanceGeneral;
     let color = this.getBaseColor();
     const chartStr = `{
-    type: 'doughnut',
-    data: {
-      datasets: [
-        {
-          data: [${avanceGeneral}, ${100 - avanceGeneral}],
-          backgroundColor: ['${color}', '#eaeaea'],
-          label: 'Dataset 1',
-          borderWidth: 0,
-        },
-      ],
-    },
-    options: {
-      circumference: Math.PI,
-      rotation: Math.PI,
-      cutoutPercentage: 75,
-      layout: {
-        padding: 40,
-      },
-      legend: {
-        display: false,
-      },
-      plugins: {
-        datalabels: {
-          color: '#000',
-          anchor: 'end',
-          align: 'end',
-          formatter: (val) => val + '%',
-          font: {
-            size: 25,
-            weight: 'bold',
-          },
-        },
-        doughnutlabel: {
-          labels: [
-            {
-              text: '\\nAvance General',
-              font: {
-                size: 20,
-              },
-            },
-            {
-              text: '\\n${avanceGeneral}%',
-              color: '#000',
-              font: {
-                size: 40,
-                weight: 'bold',
-              },
-            },
-          ],
-        },
-      },
-    },
-  }`;
+                          type: 'pie',
+                          data: {
+                            datasets: [
+                              {
+                                data: [${avanceGeneral}, ${100-avanceGeneral}],
+                                backgroundColor: [
+                                  '${color}',
+                                  '#999',
+                                ],
+                                label: 'Dataset 1',
+                              },
+                            ]
+                          },
+                          options: {
+                              legend: {
+                                display: false,
+                              },
+                              plugins: {
+                                datalabels: {
+                                  color: '#FFF',
+                                  align: 'end',
+                                  formatter: (val) => val + '%',
+                                  font: {
+                                    size: 14,
+                                    weight: 'bold',
+                                  },
+                                },
+                              },
+                            },
+                        }`;
 
-    let chartImage = "https://quickchart.io/chart?w=500&h=300&c=" + encodeURIComponent(chartStr);
+    let chartImage = "https://quickchart.io/chart?w=200&h=200&c=" + encodeURIComponent(chartStr);
     return chartImage;
   }
 
-  graficoCircularTeam(valor: any) {
+  graficoAvanceEpecialidad(avanceEpecialidad: any) {
+
+    const data = XLSX.utils.sheet_to_json(avanceEpecialidad, { header: 0 });
+
+    
     let color = this.getBaseColor();
 
-    let chartStr = `{
-      type: 'pie',
-      data: {
-        datasets: [
-          {
-            data: [${valor}, ${100 - valor}],
-            backgroundColor:['${color}', '#eaeaea'] ,
-            label: 'Dataset 1',
-            borderWidth: 0,
-          },
-        ],
-        labels: ['Red', 'Orange'],
-      },
-      options: {
-         legend: {
-                display: false,
-              },
-        plugins: {
-                datalabels: {
-                  color: 'black',
-                  formatter: (value, context)  =>  '',
-                  font: {
-                    size: 8,
-                  },
-                },
-              }
-      }
-    }`;
+    let labels: any[] = [];
+    let dataPlus: any[] = [];
+    
+    data.forEach((el: any) => {
+      labels.push(el.Especialidad);
+      dataPlus.push(el.Avance);
+    });
 
-    return "https://quickchart.io/chart?w=80&h=80&c=" + encodeURIComponent(chartStr);
+
+    const chartStr = `{
+                        type: 'bar',
+                        data: {
+                          labels: ${JSON.stringify(labels)},
+                          datasets: [
+                            {
+                              backgroundColor: '${color}',
+                              data: ${JSON.stringify(dataPlus)},
+                              datalabels: {
+                                align: 'top',
+                                anchor: 'end',
+                                color: '#000',
+                                display: true, // Display datalabels for the top dataset
+                              },
+                            },
+                          ],
+                        },
+                        options: {
+                          legend: {
+                            display: false,
+                          },
+                          plugins: {
+                                datalabels: {
+                                  color: '#FFF',
+                                  align: 'end',
+                                  formatter: (val) => val + '%',
+                                },
+                              },
+                          scales: {
+                            yAxes: [
+                              {
+                                stacked: true,
+                                ticks: {
+                                  beginAtZero: true,
+                                  max: 120,
+                                },
+                              },
+                            ],
+                            xAxes: [
+                              {
+                                stacked: true,
+                              },
+                            ],
+                          },
+                        },
+                      }`;
+
+    let chartImage = "https://quickchart.io/chart?w=400&h=200&c=" + encodeURIComponent(chartStr);
+    return chartImage;
 
   }
 
-  
+
   graficoGantt(data: any[]) {
     // backgroundColor: ['rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)', 'rgba(0, 191, 153, 1)'],
 
@@ -312,7 +359,125 @@ export class ReviewComponent {
           `;
 
 
-    return "https://quickchart.io/chart?w=950&h=300&c=" + encodeURIComponent(chartStr);
+    return "https://quickchart.io/chart?w=600&h=400&c=" + encodeURIComponent(chartStr);
+
+  }
+
+
+  graficoVelocidadEquipo(velocidadEquipo: any){
+    const data = XLSX.utils.sheet_to_json(velocidadEquipo, { header: 0 });
+    
+    let color = this.getBaseColor();
+
+    let labels: any[] = [];
+    let dataPlan: any[] = [];
+    let dataEje: any[] = [];
+    
+    data.forEach((el: any) => {
+      labels.push(el.Sprint);
+      dataPlan.push(el.Plan);
+      dataEje.push(el.Ejecutado);
+    });
+
+    const chartStr = `{
+                        "type": "bar",
+                        "data": {
+                          "labels":${JSON.stringify(labels)},
+                          "datasets": [
+                            {
+                              "type": "line",
+                              "label": "Planeado",
+                              "backgroundColor": "#999",
+                              "borderColor": "#999",
+                              "borderWidth": 1,
+                              "fill": false,
+                              "data": ${JSON.stringify(dataPlan)},
+                            },
+                            {
+                              "type": "bar",
+                              "label": "Finalizado",
+                              "backgroundColor": "${color}",
+                              "data": ${JSON.stringify(dataEje)},
+                            
+                            },
+                          ]
+                        },
+                        "options": {
+                          "responsive": true,
+                          "tooltips": {
+                            "mode": "index",
+                            "intersect": true
+                          },
+                          "plugins": {
+                            "datalabels": {
+                              "color": '#000',
+                              "align": 'end',
+                              "anchor": 'end'
+                            },
+                          },
+                        }
+                      }`;
+
+    let chartImage = "https://quickchart.io/chart?w=600&h=200&c=" + encodeURIComponent(chartStr);
+    return chartImage;
+
+  }
+
+
+  graficoVelocidadMiembros(velocidadMiembros: any){
+    const data = XLSX.utils.sheet_to_json(velocidadMiembros, { header: 0 });
+    
+    let color = this.getBaseColor();
+
+    let labels: any[] = [];
+    let dataPlan: any[] = [];
+    let dataEje: any[] = [];
+    
+    data.forEach((el: any) => {
+      labels.push(el.Miembro);
+      dataPlan.push(el.Plan);
+      dataEje.push(el.Ejecutado);
+    });
+
+    const chartStr = `{
+                        "type": "horizontalBar",
+                        "data": {
+                          "labels":${JSON.stringify(labels)},
+                          "datasets": [
+                            {
+                              "label": "Planeado",
+                              "backgroundColor": "#999",
+                              "borderColor": "#999",
+                              "borderWidth": 1,
+                              "fill": false,
+                              "data": ${JSON.stringify(dataPlan)},
+                            },
+                            {
+                              "label": "Finalizado",
+                              "backgroundColor": "${color}",
+                              "data": ${JSON.stringify(dataEje)},
+                            
+                            },
+                          ]
+                        },
+                        "options": {
+                          "responsive": true,
+                          "tooltips": {
+                            "mode": "index",
+                            "intersect": true
+                          },
+                          "plugins": {
+                            "datalabels": {
+                              "color": '#000',
+                              "align": 'end',
+                              "anchor": 'end'
+                            },
+                          },
+                        }
+                      }`;
+
+    let chartImage = "https://quickchart.io/chart?w=600&h=300&c=" + encodeURIComponent(chartStr);
+    return chartImage;
 
   }
 
